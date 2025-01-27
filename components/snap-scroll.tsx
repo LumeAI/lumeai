@@ -1,11 +1,10 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
-import useSound from "use-sound"
-import Image from "next/image"
-import { TypingAnimation } from "./ui/typing-animation"
-
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import useSound from "use-sound";
+import Image from "next/image";
+import { TypingAnimation } from "./ui/typing-animation";
 
 const sections = [
     {
@@ -29,7 +28,7 @@ const sections = [
             <div
                 key={2}
                 className="h-screen grid grid-cols-1 lg:grid-cols-3 w-full px-4 pb-10 lg:p-16 items-center justify-between snap-center"
->
+            >
                 {/* Image and Text Wrapper */}
                 <div className="flex flex-col items-center lg:items-start justify-center mb-16 col-span-2">
                     {/* Centered Image */}
@@ -65,14 +64,12 @@ const sections = [
         
     },
 
-
-
     {
         section: (
             <div
                 key={3}
                 className="h-screen grid grid-cols-1 lg:grid-cols-3 w-full px-4 pb-10 lg:p-16 items-center justify-between snap-center"
->
+            >
                 {/* Image and Text Wrapper */}
                 <div className="flex flex-col items-center lg:items-start justify-center mb-16 col-span-2">
                     {/* Centered Image */}
@@ -188,8 +185,7 @@ const sections = [
 export default function SnapScroll() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [currentSection, setCurrentSection] = useState(0);
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-    
+
     const [play] = useSound("/background.mp3", {
         volume: 0.1,
         interrupt: true
@@ -219,16 +215,6 @@ export default function SnapScroll() {
         volume: 0.15,
         interrupt: true
     });
-
-    
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [chatMessages]);
 
     useEffect(() => {
         play();
@@ -291,8 +277,6 @@ export default function SnapScroll() {
                     </motion.div>
                 ))}
             </div>
-            
-            
         </div>
-    )
+    );
 }
