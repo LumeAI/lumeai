@@ -189,13 +189,9 @@ export default function SnapScroll() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [currentSection, setCurrentSection] = useState(0);
     const [userInput, setUserInput] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [chatMessages, setChatMessages] = useState<Array<{ role: string; content: string }>>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     
-const [aiResponse, setAiResponse] = useState("");
-const [showResponse, setShowResponse] = useState(false);
-
     const [play] = useSound("/background.mp3", {
         volume: 0.1,
         interrupt: true
@@ -279,54 +275,6 @@ const [showResponse, setShowResponse] = useState(false);
             utterance.pitch = 1;
             utterance.volume = 0;
             window.speechSynthesis.speak(utterance);
-        };
-
-        const handleSendMessage = async () => {
-            if (!userInput.trim()) return;
-            
-            setIsLoading(true);
-            setShowResponse(true);
-            
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        messages: [{
-                            role: "system",
-                            content: "You are LUME, a helpful and friendly AI assistant."
-                        }, {
-                            role: "user",
-                            content: userInput
-                        }]
-                    })
-                });
-    
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
-                const data = await response.json();
-                
-                if (data.content) {
-                    setAiResponse(data.content);
-                    speak(data.content);
-                    setChatMessages(prev => [...prev, { role: 'user', content: userInput }, { role: 'assistant', content: data.content }]);
-                } else {
-                    throw new Error('No content in response');
-                }
-    
-                setUserInput("");
-            } catch (error) {
-                console.error("Error:", error);
-                const errorMessage = "I apologize, but I encountered an error. Please try again.";
-                setAiResponse(errorMessage);
-                speak(errorMessage);
-            } finally {
-                setIsLoading(false);
-            }
         };
 
     return (
