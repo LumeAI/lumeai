@@ -188,8 +188,6 @@ const sections = [
 export default function SnapScroll() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [currentSection, setCurrentSection] = useState(0);
-    const [userInput, setUserInput] = useState("");
-    const [chatMessages, setChatMessages] = useState<Array<{ role: string; content: string }>>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     
     const [play] = useSound("/background.mp3", {
@@ -267,15 +265,6 @@ export default function SnapScroll() {
         }
     }, [currentSection, stopSection1, stopSection2, stopSection3, stopSection4, stopSection5, stopSection6, 
         playSection1, playSection2, playSection3, playSection4, playSection5, playSection6]);
-
-
-        const speak = (text: string) => {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = 0.9; // Slightly slower than default
-            utterance.pitch = 1;
-            utterance.volume = 0;
-            window.speechSynthesis.speak(utterance);
-        };
 
     return (
         <div className="relative h-screen overflow-hidden">
